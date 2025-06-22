@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
 
-
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
@@ -16,9 +15,7 @@ class HomeView extends GetView<HomeController> {
       body: Center(
         child: Column(
           children: [
-            Text(
-              '${controller.upcomingDates.length} dates upcoming!',
-            ),
+            Text('${controller.upcomingDates.length} dates upcoming!'),
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -26,15 +23,15 @@ class HomeView extends GetView<HomeController> {
               itemBuilder: (BuildContext context, int index) {
                 // String count = intl.NumberFormat("#,##0", "id_ID").format(controller.upcomingDates[index]['count']);
                 // int count = intl.NumberFormat("#,##0", "id_ID").parse(formattedNumber).toInt();
-                return
-                CardComponent(
+                return CardComponent(
                   title: controller.upcomingDates[index]['title'],
                   description: controller.upcomingDates[index]['description'],
                   location: controller.upcomingDates[index]['location'],
                   date: controller.upcomingDates[index]['date'],
                 );
-              }
+              },
             ),
+            DefaultTabController(length: 4, child: Scaffold()),
             Container(
               child: Column(
                 children: [
@@ -42,34 +39,24 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       BoxMenu(
                         title: 'Dates',
-                        // color: 
+                        // color:
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      BoxMenu(
-                        title: 'To-do List',
-                      ),
+                      SizedBox(width: 5),
+                      BoxMenu(title: 'To-do List'),
                     ],
                   ),
                   Row(
                     children: [
-                      BoxMenu(
-                        title: 'Schedule'
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ), 
-                      BoxMenu(
-                        title: 'Watchlist'
-                      )
+                      BoxMenu(title: 'Schedule'),
+                      SizedBox(width: 5),
+                      BoxMenu(title: 'Watchlist'),
                     ],
                   ),
                 ],
               ),
-            )
+            ),
           ],
-        )
+        ),
       ),
     );
   }
