@@ -24,31 +24,26 @@ class DateHistoryView extends GetView<DateHistoryController> {
         body: TabBarView(
           children: [
             Center(
-              child: 
-                Column(
-                  children: [
-                    ListView.builder(
+              child: Column(
+                children: [
+                  ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: controller.upcomingDates.length,
                     itemBuilder: (BuildContext context, int index) {
                       // String count = intl.NumberFormat("#,##0", "id_ID").format(controller.upcomingDates[index]['count']);
                       // int count = intl.NumberFormat("#,##0", "id_ID").parse(formattedNumber).toInt();
-                      return
-                      CardComponent(
+                      return CardComponent(
                         title: controller.upcomingDates[index]['title'],
-                        description: controller.upcomingDates[index]['description'],
+                        description:
+                            controller.upcomingDates[index]['description'],
                         location: controller.upcomingDates[index]['location'],
                         date: controller.upcomingDates[index]['date'],
                       );
-                    }
+                    },
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'All dates planned'
-                  ),
+                  SizedBox(height: 20),
+                  Text('All dates planned'),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -56,40 +51,39 @@ class DateHistoryView extends GetView<DateHistoryController> {
                     itemBuilder: (BuildContext context, int index) {
                       // String count = intl.NumberFormat("#,##0", "id_ID").format(controller.upcomingDates[index]['count']);
                       // int count = intl.NumberFormat("#,##0", "id_ID").parse(formattedNumber).toInt();
-                      return
-                      CardComponent(
+                      return CardComponent(
                         title: controller.plannedDates[index]['title'],
-                        description: controller.plannedDates[index]['description'],
+                        description:
+                            controller.plannedDates[index]['description'],
                         location: controller.plannedDates[index]['location'],
                         date: controller.plannedDates[index]['date'],
                       );
-                    }
+                    },
                   ),
                 ],
-              )
+              ),
             ),
             Center(
               child: Column(
                 children: [
                   ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: controller.pastDates.length,
-                itemBuilder: (BuildContext context, int index) {
-                  // String count = intl.NumberFormat("#,##0", "id_ID").format(controller.upcomingDates[index]['count']);
-                  // int count = intl.NumberFormat("#,##0", "id_ID").parse(formattedNumber).toInt();
-                  return
-                  CardComponent(
-                    title: controller.pastDates[index]['title'],
-                    description: controller.pastDates[index]['description'],
-                    location: controller.pastDates[index]['location'],
-                    date: controller.pastDates[index]['date'],
-                  );
-                }
-              ),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: controller.pastDates.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // String count = intl.NumberFormat("#,##0", "id_ID").format(controller.upcomingDates[index]['count']);
+                      // int count = intl.NumberFormat("#,##0", "id_ID").parse(formattedNumber).toInt();
+                      return CardComponent(
+                        title: controller.pastDates[index]['title'],
+                        description: controller.pastDates[index]['description'],
+                        location: controller.pastDates[index]['location'],
+                        date: controller.pastDates[index]['date'],
+                      );
+                    },
+                  ),
                 ],
-              )),
-            Center(child: Text('Profile Page')),
+              ),
+            ),
           ],
         ),
       ),

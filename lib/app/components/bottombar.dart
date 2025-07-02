@@ -1,94 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
-import 'package:for2/app/routes/app_pages.dart';
+import 'package:for2/app/modules/date_history/views/date_history_view.dart';
+import 'package:for2/app/modules/home/views/home_view.dart';
+import 'package:for2/app/modules/todo/views/todo_view.dart';
+import 'package:for2/app/modules/wishlist/views/wishlist_view.dart';
 import 'package:get/get.dart';
-import 'package:sp_util/sp_util.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:for2/app/routes/app_pages.dart';
 
-// import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+class MainNavBar extends StatelessWidget {
+  final int initialIndex;
+  final BuildContext context;
 
-class BottomNavigation extends StatefulWidget {
-  // const BottomNavigation({super.key});
+  const MainNavBar({super.key, required this.context, this.initialIndex = 0});
 
-  final int? navIndex;
+  List<Widget> _buildScreens() {
+    return [HomeView(), TodoView(), DateHistoryView(), WishlistView()];
+  }
 
-  const BottomNavigation({
-    super.key,
-    this.navIndex ,
-  });
-
-  @override
-  State<BottomNavigation> createState() => _BottomNavigationState();
-}
-
-class _BottomNavigationState extends State<BottomNavigation> {
-
-  late int appPages;
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    appPages = widget.navIndex ?? 0;
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.home),
+        title: ("Home"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.calendar_today),
+        title: ("Todo"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.history),
+        title: ("History"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.list),
+        title: ("LWishlist"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    // int idx = SpUtil.getBool('navIndex') == 0 ? 0 : SpUtil.getInt('navIndex');
-    return CurvedNavigationBar(
-      index:  appPages,
-      iconPadding: 15,
-      color: colorBackground,
-      backgroundColor: Colors.transparent,
-      buttonBackgroundColor: colorBtn,
-      animationDuration:Duration(milliseconds: 290),
-      items: [
-        CurvedNavigationBarItem(
-          child: Icon(
-            Icons.home_outlined,
-            color: appPages == 0 ? clLight : menuColor
-          ),
-          labelStyle: TextStyle(fontSize: 12, color: menuColor),
-          label: 'Home',
-          
-        ),
-        CurvedNavigationBarItem(
-          labelStyle: TextStyle(fontSize: 12, color: menuColor),
-          child: Icon(Icons.list_alt_outlined,
-            color: appPages == 1 ? clLight : menuColor
-          ),
-          label: 'Open WO',
-        ),
-        CurvedNavigationBarItem(
-          labelStyle: TextStyle(fontSize: 12, color: menuColor),
-          child: Icon(Icons.playlist_add_check,
-            color: appPages == 2 ? clLight : menuColor
-          
-          ),
-          label: 'Close WO',
-        ),
-        CurvedNavigationBarItem(
-          labelStyle: TextStyle(fontSize: 12, color: menuColor),
-          child: Icon(Icons.settings,
-             color: widget.navIndex == 3 ? clLight : menuColor
-          ),
-          label: 'Settings',
-        ),
-      ],
-      onTap: (index) {
-        setState(() {
-          appPages = index;
-        });
+    PersistentTabController controller = PersistentTabController(
+      initialIndex: initialIndex,
+    );
 
-        Future.delayed(Duration(milliseconds: 300), () {
-          Get.toNamed('/home', 
-            arguments: {
-              'userid': index
-            });
-        });
-      },
-      letIndexChange: (index) => true,
+    return PersistentTabView(
+      context,
+      controller: controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineToSafeArea: true,
+      backgroundColor: Colors.white,
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
+      navBarStyle: NavBarStyle.style6, // Choose any style you like
     );
   }
 }
