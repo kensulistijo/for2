@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -37,4 +38,12 @@ class HomeController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  void tes() async {
+    final snapshot = await FirebaseFirestore.instance.collection('Dates').get();
+
+    for (var doc in snapshot.docs) {
+      print(doc['Title']);
+    }
+  }
 }

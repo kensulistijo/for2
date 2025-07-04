@@ -243,6 +243,7 @@ class HomeView extends GetView<HomeController> {
                 onPressed: addDateForm,
                 child: Text('Add a new date!'),
               ),
+              ElevatedButton(onPressed: controller.tes, child: Text('tes')),
             ],
           ),
         ),
