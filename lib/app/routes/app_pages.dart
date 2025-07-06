@@ -33,6 +33,7 @@ class AppPages {
         TodoBinding(),
         DateHistoryBinding(),
         WishlistBinding(),
+        NavigationBinding(),
       ],
     ),
     GetPage(

@@ -12,19 +12,22 @@ class HomeController extends GetxController {
   ];
 
   final TextEditingController dateTitleController = TextEditingController();
-  RxList upcomingDates = [].obs;
+  RxList upcomingDates = <Map<String, dynamic>>[].obs;
+  RxList todayTodo = <Map<String, dynamic>>[].obs;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController startTimeController = TextEditingController();
   final TextEditingController statusController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
-  final formKey = GlobalKey();
+  final formKey = GlobalKey<FormState>();
 
   final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getAllDates();
+    getTodoToday();
   }
 
   @override
@@ -39,11 +42,72 @@ class HomeController extends GetxController {
 
   void increment() => count.value++;
 
-  void tes() async {
-    final snapshot = await FirebaseFirestore.instance.collection('Dates').get();
+  // void getUpcomingDates() async {
+  //   final now = DateTime.now();
+  //   final nextMonth = DateTime(now.year, now.month + 30, now.day);
+  //   final start = Timestamp.fromDate(now);
+  //   final end = Timestamp.fromDate(nextMonth);
 
+  //   final snapshot =
+  //       await FirebaseFirestore.instance
+  //           .collection('Dates')
+  //           .where('Start date', isGreaterThanOrEqualTo: start)
+  //           .where('Start date', isLessThanOrEqualTo: end)
+  //           .orderBy('Start date')
+  //           .get();
+
+  //   final dates =
+  //       snapshot.docs.map((doc) {
+  //         final data = doc.data();
+  //         return {'id': doc.id, ...data};
+  //       }).toList();
+  //   for (var doc in snapshot.docs) {
+  //     print('${doc.id}: ${doc['title']}');
+  //   }
+  //   print(snapshot);
+  //   print(dates);
+
+  //   upcomingDates.value = dates;
+
+  //   // upcomingDates.value = snapshot;
+  // }
+
+  void getAllDates() async {
+    final snapshot = await FirebaseFirestore.instance.collection('Dates').get();
+    final dates =
+        snapshot.docs.map((doc) {
+          final data = doc.data();
+          return {'id': doc.id, ...data};
+        }).toList();
     for (var doc in snapshot.docs) {
-      print(doc['Title']);
+      print('${doc.id}: ${doc['Title']}');
     }
+
+    upcomingDates.value = dates;
+    print(upcomingDates);
+  }
+
+  void getTodoToday() async {
+    final now = DateTime.now();
+
+    final startOfDay = DateTime(now.year, now.month, now.day);
+    final endOfDay = startOfDay.add(const Duration(days: 1));
+
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection('Dates')
+            .where('Start Date', isGreaterThanOrEqualTo: startOfDay)
+            .where('Start Date', isLessThan: endOfDay)
+            .orderBy('Start Date')
+            .get();
+
+    final todos =
+        snapshot.docs.map((doc) {
+          final data = doc.data();
+          return {'id': doc.id, ...data};
+        }).toList();
+
+    todayTodo.value = todos;
+    print(todayTodo);
   }
 }

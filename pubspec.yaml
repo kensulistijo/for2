@@ -30,8 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # js: ^0.6.7
   firebase_core: ^2.32.0
   cloud_firestore: ^4.9.0
+  # firebase_auth: ^4.16.0
   data_table_2: ^2.6.0
   cupertino_icons: ^1.0.8
   curved_labeled_navigation_bar: ^2.0.5

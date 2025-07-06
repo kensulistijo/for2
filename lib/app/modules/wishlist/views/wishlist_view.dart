@@ -9,16 +9,21 @@ class WishlistView extends GetView<WishlistController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('WishlistView'), centerTitle: true),
-      body: Column(
-        children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 4,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.45,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          shrinkWrap:
+              true, // Needed to allow inside scrollable parent (e.g. SingleChildScrollView)
+          crossAxisCount: 2, // 2 columns
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.65, // Adjust based on your card's height/width
+          children: List.generate(3, (index) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 4,
               child: Column(
                 children: [
                   ClipRRect(
@@ -29,8 +34,8 @@ class WishlistView extends GetView<WishlistController> {
                     child: Image.asset(
                       'assets/images/yotsugi.jpg',
                       width: double.infinity,
-                      height: 120,
-                      fit: BoxFit.fill,
+                      height: 150,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   ListTile(
@@ -42,9 +47,7 @@ class WishlistView extends GetView<WishlistController> {
                       '\$50',
                       style: TextStyle(fontSize: 20),
                     ),
-                    subtitle: Text(
-                      'ahiahfuihawuifuwaguiawguiawhguhawuifhwaifa',
-                    ),
+                    subtitle: Text('Short description here...'),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -52,10 +55,7 @@ class WishlistView extends GetView<WishlistController> {
                       onPressed: () {},
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.blue,
-                        minimumSize: Size(
-                          MediaQuery.of(context).size.width,
-                          56,
-                        ),
+                        minimumSize: const Size(double.infinity, 56),
                       ),
                       child: const Text(
                         'Add to cart',
@@ -65,9 +65,9 @@ class WishlistView extends GetView<WishlistController> {
                   ),
                 ],
               ),
-            ),
-          ),
-        ],
+            );
+          }),
+        ),
       ),
     );
   }

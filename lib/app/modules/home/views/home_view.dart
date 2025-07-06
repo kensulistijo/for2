@@ -163,87 +163,93 @@ class HomeView extends GetView<HomeController> {
                 alignment: Alignment.center,
                 child: Text('UPCOMING DATES!!'),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: controller.tempDates.length,
-                itemBuilder: (context, index) {
-                  final dates = controller.tempDates[index];
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade100,
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tes',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+              Obx(() {
+                if (controller.upcomingDates.isEmpty) {
+                  return Center(child: Text("No upcoming dates"));
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: controller.upcomingDates.length,
+                  itemBuilder: (context, index) {
+                    final dates = controller.upcomingDates[index];
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade100,
+                        border: Border.all(color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.upcomingDates[index]['Title'],
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Tes',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                          const SizedBox(height: 4),
+                          Text(
+                            'Tes',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }),
               SizedBox(height: 10),
-              Align(alignment: Alignment.center, child: Text('Todo today!')),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: controller.tempDates.length,
-                itemBuilder: (context, index) {
-                  final dates = controller.tempDates[index];
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade100,
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tes',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+              Align(alignment: Alignment.center, child: Text('TODO TODAY!')),
+              Obx(() {
+                if (controller.todayTodo.isEmpty) {
+                  return Center(child: Text("No upcoming dates"));
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: controller.todayTodo.length,
+                  itemBuilder: (context, index) {
+                    final todos = controller.todayTodo[index];
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade100,
+                        border: Border.all(color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.todayTodo[index]['Title'],
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Tes',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                          const SizedBox(height: 4),
+                          Text(
+                            controller.todayTodo[index]['Description'],
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              ElevatedButton(
-                onPressed: addDateForm,
-                child: Text('Add a new date!'),
-              ),
-              ElevatedButton(onPressed: controller.tes, child: Text('tes')),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }),
+              SizedBox(height: 100),
             ],
           ),
         ),
